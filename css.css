@@ -9,13 +9,22 @@
     .grid_layout {
       display: grid;
       grid-template-areas: 'top top' 'left right';
+      max-width: var(--max-width);
       grid-gap: 10px;
       padding: 15px;
       grid-template-rows: 150px;
       grid-auto-rows: 600px;
     }
   }
-  
+
+  :root
+  {
+    --main-bg-color: coral;
+    --main-txt-color: blue;
+    --main-padding: 15px;
+    --max-width: 100%;
+  }
+
   .top {
     grid-area: top;
     text-align: center;
@@ -30,7 +39,7 @@
   }
   
   .container > div {
-    padding: 30px;
+    padding: var(--main-padding);
     border: 1px blueviolet solid;
   }
   
