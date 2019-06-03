@@ -1,92 +1,126 @@
-//1.Nodevinēt mainīgos kurš iegūst ienākumu saraksta elemetu no html dokumenta
-var totalincome = document.getElementById('all_income');
+// #region Variables
+const inc = document.getElementById('all_income');
+const exp = document.getElementById('all_expenses');
+const budg = document.getElementById('budget__value');
 
-//2.Nodevinēt mainīgos kurš iegūst izdevumu saraksta elemetu no html dokumenta
-var totaloutcome = document.getElementById('all_expenses');
+const tincome = document.querySelector('.total_income');
+const texpenses = document.querySelector('.total_expenses');
+// #endregion
+getLocalStorage();
 
-//3.Nodevinēt mainīgos kurš iegūst pieejamā budžeta vertības elemetu no html dokumenta
-var budgetelement = parseInt(document.getElementById('budget__value').innerHTML);
 
-//4.Izveidot funkciju_1, kas izmaina pieejamā budžeta vertību
-var plusminus;
-var element1;
-var income2 = document.getElementById('all_income');
-var outcome2 = document.getElementById('all_expenses');
+let BudgSaveData = {}, id = 0;
 
-function funkcija_1(element1,plusminus)
-{
-    budgetelement = parseInt(document.getElementById('budget__value').innerHTML);
-
-    if(plusminus == "+")
-    {
-        document.getElementById('budget_value').innerHTML = parseInt(budgetelement, 0) + parseInt(element1,0);
-    }
-    else if(plusminus == "-")
-    {
-        document.getElementById('budget_value').innerHTML = parseInt(budgetelement, 0) - parseInt(element1,0);
-    }
+function TotalBudget(tbudg) {
+  budg.innerHTML = parseInt(budg.innerHTML, 0) + parseInt(tbudg, 0);
+  localstorage();
 }
 
-//5.Izveidot funkciju_2, kuru izsaucot, tiek pievienoti ienākumi vai izdevumi html elementu sarakstiem
-var inorout;
+//5.additem funkcija, kuru izsaucot, tiek pievienoti ienākumi vai izdevumi html elementu sarakstiem
+function additem(isincome, description, value) {
+  var item = document.createElement('DIV');
+  item.className += 'list_item';
+  var valdiv = document.createElement('DIV');
+  valdiv.className += 'list_valdivue';
+  var descrdiv = document.createElement('DIV');
+  descrdiv.className += 'list_description';
+  descrdiv.innerHTML = description;
 
-function funkcija_2()
-{
-    var add_type = document.getElementById('add_type').value;
-    
-    if(add_type == "income")
-    {
-        plusminus = "+";
-        inorout = income2;
-    }
-    else
-    {
-        plusminus = "-";
-        inorout = outcome2;
-    }
-
-    var div1 = document.createElement("DIV"); 
-    div1.className = "list_item";
-    var aye1 = document.createElement("DIV"); 
-    aye1.className = "list_description";
-    var aye2 = document.createElement("DIV"); 
-    aye2.className = "list_value";
-
-    var element1 = document.getElementById('add_value').value;
-    var adddesc1 = document.createTextNode(document.getElementById('add_description').value);
-    var addvalue1 = document.createTextNode(plusminus + element1 + "$"); 
-    aye1.appendChild(adddesc1);  
-    aye2.appendChild(addvalue1);  
-    div1.appendChild(aye1);  
-    div1.appendChild(aye2);  
-    inorout.appendChild(div1);
-    funkcija_1(element1, plusminus);
+  if (isincome == 'income') {
+    valdiv.innerHTML = '+' + value + '€';
+    BudgSaveData['income' + id.toString()] = 'id:' + id + 'description:' + description + 'value:' + value;
+    inc.appendChild(item);
+  } else {
+    valdiv.innerHTML = '-' + value + '€';
+    exp.appendChild(item);
+    value = -Math.abs(value);
+  }
+  id++;
+  item.appendChild(descrdiv);
+  item.appendChild(valdiv);
+  updatetotals(value, isincome);
+  TotalBudget(value);
 }
 
-//6.Izveidot funkciju_3, kas izsaucas pēc pogas "pievienot" nospiešanas
-
-//7.Funkcijai_3 jāpārbauda vai apraksta un summas lauks ir aizpildīts, ja nav, tad izvada paziņojumu par to, ka kāds no laukiem nav aizpildīts
-
-//8.Funkcijai_3 ir jāizsauc funkcija_2, kas pievieno ienākumu vai izdevumu sarakstam jaunu ierakstu.
-
-function funkcija_3()
-{
-    var description3 = document.getElementById('add_value').value;
-    var value3 = document.getElementById('add_description').value;
-    if(description3 && value3 != "")
-    {
-        funkcija_2();
+var kinput = document.getElementById("add_value");
+kinput.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        addtolist();
     }
-    else
-    {
-        console.log("oopsie, an error, please don't try again if you're too stupid to add a budget");
+});
+var kinput2 = document.getElementById("add_description");
+kinput2.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        addtolist();
     }
+});
+
+function addtolist() {
+  var val = document.getElementById('add_value');
+  var descr = document.getElementById('add_description');
+  var isitincome = document.getElementById('add_type');
+  if (val.value == '' || descr.value == '') {
+    alert('Aizpildi tukšos lauciņus!');
+  } else {
+    additem(isitincome.value, descr.value, val.value);
+  }
 }
 
-//9.Lai pārbaudītu vai izveidotās funkcijas darbojas pareizi, izsauc tās zemāk un ievieto fake datus
+function updatetotals(value, income) {
+  if (income == 'income') {
+    tincome.innerHTML = parseInt(tincome.innerHTML, 0) + parseInt(value, 0);
+  } else {
+    texpenses.innerHTML = parseInt(texpenses.innerHTML, 0) - parseInt(value, 0);
+    console.log(income);
+  }
+}
 
-//10.Izsaukt funkciju_2, kas pievieno ienākumu sarakstam vertības
+function localstorage() {
+  if (typeof Storage !== 'undefined') {
+    localStorage.setItem('income', inc.innerHTML);
+    localStorage.setItem('expenses', exp.innerHTML);
+    localStorage.setItem('tbudg', budg.innerHTML);
+    localStorage.setItem('allincome', tincome.innerHTML);
+    localStorage.setItem('allexpenses', texpenses.innerHTML);
 
-//11.Izsaukt funkciju_2, kas pievieno izdevumu sarakstam vertības
+  }
+}
+function clearlocal() {
+  localStorage.clear();
+  location.reload();
+}
+function getLocalStorage()
+{
+  inc.innerHTML = localStorage.getItem('income');
+  exp.innerHTML = localStorage.getItem('expenses');
+  budg.innerHTML = localStorage.getItem('tbudg');
+  ifEmpty(budg);
+  tincome.innerHTML = localStorage.getItem('allincome');
+  ifEmpty(tincome);
+  texpenses.innerHTML = localStorage.getItem('allexpenses');
+  ifEmpty(texpenses);
+}
 
-//12.Izsaukt funkciju_1, kas izmaina pieejamā budžeta vertību
+function ifEmpty(element)
+{
+  if(element.innerHTML == '')
+  {
+    element.innerHTML = 0;
+  }
+}
+//darbojas //Salabot localStorage tā, lai pēc lapas refresha nepazūd pieejamais budžets un kopējā izdevumu un ienākumu vērtība
+
+//darbojas //Pievienot iespēju izveidot jaunu ierakstu budzeta kalkulātora izmantojot enter taustinu
+
+//Izveidot vienu mainīgo, kurā veido sarakstu ar ienākumiem un izdevumiem un to visu glabāt objektā, kuru pēc tam saglabā localStorage
+
+//Optimizēt kodu, atbrīvoties no liekā
+//Pievienot iespēju nodzēst sarakstu elementu un tas automātiski atrēķinās nost
+//ja lauki ir aizpildīti, tad pievienot ierakstu sarakstam var uzspiežot enter (Poga paliek pieejama)
+//Pievienot iespēju izveidot jaunu mēnesi. Opcija Jauns mēnesis saglabās iepriekšējā mēneša datus un nodzēsīs laukus priekš jaunā mēneša.
+//Pēc vajadzības var atvērt iepriekšējos mēnešus un apskatīt to ienākumus un izdevumus
+
+    // console.log('BudgSavedData', BudgSaveData);
+//TotalBudget, kas izmaina pieejamā budžeta vertību

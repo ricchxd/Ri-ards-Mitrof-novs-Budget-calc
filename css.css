@@ -1,76 +1,164 @@
 /* Nodefinē kontenera maksimālo platumu un ar margin: auto nocentre */
 .container {
-    max-width: 1000px;
-    margin: auto;
-  }
-  
-  /* Pieškir izkārtojumu ar css grid, priekš desktop*/
-  @media only screen and (min-width: 700px) {
-    .grid_layout {
-      display: grid;
-      grid-template-areas: 'top top' 'left right';
-      max-width: var(--max-width);
-      grid-gap: 10px;
-      padding: 15px;
-      grid-template-rows: 150px;
-      grid-auto-rows: 600px;
-    }
-  }
+  max-width: 1000px;
+  margin: auto;
+}
 
-  :root
-  {
-    --main-bg-color: coral;
-    --main-txt-color: blue;
-    --main-padding: 15px;
-    --max-width: 100%;
+/* Pieškir izkārtojumu ar css grid, priekš desktop*/
+@media only screen and (min-width: 700px) {
+  .grid_layout {
+    display: grid;
+    grid-template-areas: 'top top' 'left right';
+    grid-gap: 10px;
+    padding: 15px;
+    grid-template-rows: 150px;
+    grid-auto-rows: 600px;
   }
+}
 
-  .top {
-    grid-area: top;
-    text-align: center;
-  }
-  
-  .left {
-    grid-area: left;
-  }
-  
-  .right {
-    grid-area: right;
-  }
-  
-  .container > div {
-    padding: var(--main-padding);
-    border: 1px blueviolet solid;
-  }
-  
-  .container > div h1 {
-    margin-top: 0;
-  }
-  
-  .budget__value {
-    padding-bottom: 30px;
-  }
-  
-  .budget__total {
-    font-size: 30px;
-    margin-bottom: 15px;
-  }
-  
-  /* styling for income and expeses list */
-  .list {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .list_item {
-    display: flex;
-    justify-content: space-between;
-  }
-  .list__inner {
-    flex-grow: 1;
-  }
-  
-  .list__total {
-    align-self: flex-end;
-  }
-  
+body
+{
+  font-family: "Arial";
+}
+
+.top {
+  grid-area: top;
+  text-align: center;
+}
+
+.left {
+  grid-area: left;
+}
+
+.right {
+  grid-area: right;
+}
+
+.container > div {
+  padding: 30px;
+  border: 1px rgb(0, 174, 255) solid;
+  border-radius: 4px;
+}
+
+.container > div h1 {
+  margin-top: 0;
+}
+
+.budget__value {
+  padding-bottom: 30px;
+}
+
+.budget__total {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+/* styling for income and expeses list */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list_item {
+  display: flex;
+  justify-content: space-between;
+}
+.list__inner {
+  flex-grow: 1;
+}
+
+.list__total {
+  align-self: flex-end;
+}
+
+.budget__total
+{
+  color: rgb(0, 174, 255);
+}
+.budget__title
+{
+  color: rgb(116, 116, 116);
+  font-weight: lighter;
+}
+
+#buttonclear
+{
+  font-family: "Arial";
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 3px;
+  border: 1.25px rgb(0, 174, 255) solid;
+  background-color: rgb(147, 221, 255);
+  color: white;
+}
+#buttonclear:hover
+{
+  background-color: rgb(97, 178, 216);
+  transition: 1s;
+}
+
+#pievienot
+{
+  font-family: "Arial";
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 3px;
+  border: 1.25px rgb(0, 174, 255) solid;
+  background-color: rgb(147, 221, 255);
+  color: white;
+}
+#pievienot:hover
+{
+  background-color: rgb(97, 178, 216);
+  transition: 1s;
+}
+
+.total_income, .total_expenses, .list__total
+{
+  font-weight: bold;
+}
+
+#add_type, #add_description, #add_value
+{
+  border: 1.49px rgb(0, 174, 255) solid;
+}
+
+#all_income
+{
+  overflow: scroll;
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+#all_expenses
+{
+  overflow: scroll;
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+::-webkit-scrollbar
+{
+  width: 12px;
+  height: 50px;
+}
+::-webkit-scrollbar-thumb
+{
+  background: rgb(143, 219, 255);
+}
+::-webkit-scrollbar-thumb:hover
+{
+  background: rgb(0, 174, 255);
+}
+
+
+
+/* 
+CSS UZDEVUMI
+Nostilot galvenes un saraksta elementus
+-"Pieejamais budžets" tekstam piešķirt stilu, kas labi iederas kopējā dizainā
+-Ievades laukiem piešķirt vizuāli pievilcīgu stilu (font-size, border, padding)
+-Nostilot pogas vizuāli pievilcīgi
+-Izcelt kopējo izdevumu un ienākumu izvadi
+-Ienākumu un izdevumu sarakstam piešķirt stilu, kas labāk nodala saraksta ierakstus vienu no otra
+*/
