@@ -23,6 +23,8 @@ function additem(isincome, description, value) {
   var valdiv = document.createElement('DIV');
   valdiv.className += 'list_valdivue';
   var descrdiv = document.createElement('DIV');
+  var deldiv = document.createElement('DIV');
+  deldiv.className += 'delett';
   descrdiv.className += 'list_description';
   descrdiv.innerHTML = description;
 
@@ -38,6 +40,7 @@ function additem(isincome, description, value) {
   id++;
   item.appendChild(descrdiv);
   item.appendChild(valdiv);
+  item.appendChild(deldiv);
   updatetotals(value, isincome);
   TotalBudget(value);
 }
@@ -110,6 +113,19 @@ function ifEmpty(element)
     element.innerHTML = 0;
   }
 }
+
+window.onload = clock;
+function clock()
+{
+    var d = new Date();
+    var date = d.getDate();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var monthArray = ["January", "February","March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
+    month = monthArray[month];
+    document.getElementById("date1").innerHTML= month + " " + date;
+}
+
 //darbojas //Salabot localStorage tā, lai pēc lapas refresha nepazūd pieejamais budžets un kopējā izdevumu un ienākumu vērtība
 
 //darbojas //Pievienot iespēju izveidot jaunu ierakstu budzeta kalkulātora izmantojot enter taustinu

@@ -80,6 +80,10 @@ body
   color: rgb(116, 116, 116);
   font-weight: lighter;
 }
+.list_description
+{
+  word-break: all;
+}
 
 #buttonclear
 {
@@ -116,6 +120,7 @@ body
 .total_income, .total_expenses, .list__total
 {
   font-weight: bold;
+  color: rgb(0, 174, 255);
 }
 
 #add_type, #add_description, #add_value
@@ -151,7 +156,26 @@ body
   background: rgb(0, 174, 255);
 }
 
+#date1
+{
+  color: rgb(0, 174, 255);
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-end;
+  height: 0px;
+}
 
+.delett
+{
+  width: 20px;
+  height: 20px;
+  background-color: black;
+}
+
+.list_item
+{
+  padding: 10px;
+}
 
 /* 
 CSS UZDEVUMI
